@@ -18,7 +18,7 @@ struct Pokemon: Codable {
     let isDefault: Bool
     let locationAreaEncounters: String
     let moves: [Move]
-    let name: String
+    var name: String
     let order: Int
     let pastAbilities, pastTypes: [JSONAny]
     let species: Species

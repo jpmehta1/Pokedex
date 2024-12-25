@@ -9,9 +9,11 @@ import Foundation
 
 class PokemonViewModel: ObservableObject {
     @Published var pokemon: Pokemon?
-    
+    @Published var pokemonName: String
     init() {
+        pokemonName = "string"
         fetchPokemonData()
+       
     }
     
     func fetchPokemonData() {
@@ -19,7 +21,7 @@ class PokemonViewModel: ObservableObject {
         guard let URL =  URL(string:urlstring)else{
             return
         }
-        URLSession.shared.dataTask(with:URL){(data,response, error) in
+        URLSession.shared.dataTask(with:URL){ [self](data,response, error) in
             //handle errors first
             if let error = error{
                 print(error.localizedDescription)
@@ -37,8 +39,9 @@ class PokemonViewModel: ObservableObject {
                 //decoder
                 let decoder = JSONDecoder()
                 //decode
-                let pokemonOne = try decoder.decode(Pokemon.self, from: data)
-                print(pokemonOne.id,pokemonOne.name)
+                pokemon = try decoder.decode(Pokemon.self, from: data)
+                configurePokemon()
+                print(pokemon?.id ?? "nil" ,pokemon?.name ?? "nil")
        }
             catch{
                 
@@ -48,7 +51,16 @@ class PokemonViewModel: ObservableObject {
                 .resume()
     }
     
+    func configurePokemon(){
+        var pokName = pokemon?.name ?? "nil"
+        pokName = String(pokName).capitalized
+        self.pokemonName = pokName
+        
+    }
     
     
     
 }
+
+
+//step 2 is now changing ditto to Ditto and remove the optional string

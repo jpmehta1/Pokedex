@@ -12,13 +12,10 @@ struct SwiftUIView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
             //Image
-            
-            
             VStack(){
-                
-                
                 //Name
-                Text("\(model.pokemon?.name)")
+                // unwrap the optional with a default value, else the pokemon name will be wrapped in an optional type
+                Text("\(model.pokemonName)")
                     .bold()
                     .font(.title)
                     .padding(.top,380)
